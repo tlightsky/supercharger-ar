@@ -14,6 +14,13 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
 directionalLight.position.set(0, 1, 1);
 scene.add(directionalLight);
 
+// 添加一个绿色的立方体作为占位符
+const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+cube.position.set(0, 0, -2);
+scene.add(cube);
+
 // 加载3D模型
 let model;
 const loader = new THREE.GLTFLoader();
@@ -94,6 +101,10 @@ function animate() {
 }
 
 function render() {
+    // 如果不在XR模式，设置相机位置
+    if (!renderer.xr.isPresenting) {
+        camera.position.set(0, 0, 0);
+    }
     renderer.render(scene, camera);
 }
 
